@@ -1,6 +1,6 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="sub1.User1"%>
+<%@page import="sub1.User4"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -9,7 +9,7 @@
 <%
 	
 	// 목록 출력 리스트
-	List<User1> user1List = new ArrayList();
+	List<User4> user4List = new ArrayList();
 
 
 	String host = "jdbc:mysql://localhost:3306/studydb";
@@ -26,19 +26,21 @@
 		Statement stmt = conn.createStatement();
 		
 		// 4) SQL 실행
-		String sql = "SELECT * FROM user1";
+		String sql = "SELECT * FROM user4";
 		ResultSet rs = stmt.executeQuery(sql);
 		
 		// 5) 결과셋(ResultSet) 처리
 		while(rs.next()) {
 			
-			User1 user1 = new User1();
-			user1.setUserid(rs.getString(1));
-			user1.setName(rs.getString(2));
-			user1.setHp(rs.getString(3));
-			user1.setAge(rs.getInt(4));
+			User4 user4 = new User4();
+			user4.setUserid(rs.getString(1));
+			user4.setName(rs.getString(2));
+			user4.setGender(rs.getString(3));
+			user4.setAge(rs.getInt(4));
+			user4.setHp(rs.getString(5));
+			user4.setAddr(rs.getString(6));
 			
-			user1List.add(user1);
+			user4List.add(user4);
 		}
 		// 6) 데이터베이스 접속 해제
 		rs.close();
@@ -59,35 +61,39 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>user1::목록</title>
+		<title>user4::목록</title>
 	</head>
 	<body>
-		<h3>User1 목록</h3>
+		<h3>User4 목록</h3>
 		
 		<a href="/ch05/1_jdbc.jsp">메인</a><br>
-		<a href="/ch05/user1/register.jsp">등록</a><br>
+		<a href="/ch05/user4/register.jsp">등록</a><br>
 		
 	
 		<table border="1">
 			<tr>
 				<th>아이디</th>
 				<th>이름</th>
-				<th>생년월일</th>
+				<th>성별</th>
 				<th>나이</th>
+				<th>전화번호</th>
+				<th>주소</th>
 				<th>관리</th>
 			</tr>
 			<%
-				for (User1 user1 : user1List) {
+				for (User4 user4 : user4List) {
 			%>
 			
 			<tr>
-				<td><%= user1.getUserid() %></td>
-				<td><%= user1.getName() %></td>
-				<td><%= user1.getHp() %></td>
-				<td><%= user1.getAge() %></td>
+				<td><%= user4.getUserid() %></td>
+				<td><%= user4.getName() %></td>
+				<td><%= user4.getGender() %></td>
+				<td><%= user4.getAge() %></td>
+				<td><%= user4.getHp() %></td>
+				<td><%= user4.getAddr() %></td>
 				<td>
-					<a href="/ch05/user1/modify.jsp?userid=<%= user1.getUserid() %>">수정</a>
-					<a href="/ch05/user1/proc/delete.jsp?userid=<%= user1.getUserid() %>">삭제</a>
+					<a href="/ch05/user4/modify.jsp?userid=<%= user4.getUserid() %>">수정</a>
+					<a href="/ch05/user4/proc/delete.jsp?userid=<%= user4.getUserid() %>">삭제</a>
 				</td>
 			</tr>
 			<%

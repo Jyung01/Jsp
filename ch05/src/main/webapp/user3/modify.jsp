@@ -1,4 +1,4 @@
-<%@page import="sub1.User1"%>
+<%@page import="sub1.User3"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -9,7 +9,7 @@
 	String userid = request.getParameter("userid");
 
 	// 수정 데이터
-	User1 user1 = null;
+	User3 user3 = null;
 
 	// --------------------------------
 	// 수정 데이터 조회 (데이터베이스 조회)
@@ -25,7 +25,7 @@
 		// 2) 데이터베이스 접속
 		Connection conn = DriverManager.getConnection(host, user, pass);
 		// 3) SQL 실행 객체 생성
-		String sql = "SELECT * FROM user1 where userid = ?";
+		String sql = "SELECT * FROM user3 where userid = ?";
 		PreparedStatement psmt = conn.prepareStatement(sql);
 		psmt.setString(1, userid);
 		
@@ -34,11 +34,12 @@
 		
 		// 5) 결과셋 처리
 		if (rs.next()) {
-			user1 = new User1();
-			user1.setUserid(rs.getString(1));
-			user1.setName(rs.getString(2));
-			user1.setHp(rs.getString(3));
-			user1.setAge(rs.getInt(4));
+			user3 = new User3();
+			user3.setUserid(rs.getString(1));
+			user3.setName(rs.getString(2));
+			user3.setBirth(rs.getString(3));
+			user3.setHp(rs.getString(4));
+			user3.setAddr(rs.getString(5));
 		}
 
 		// 6) 데이터베이스 접속 해제
@@ -58,32 +59,36 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>user1::수정</title>
+		<title>user3::수정</title>
 	</head>
 	<body>
-		<h3>User1 수정</h3>
+		<h3>User3 수정</h3>
 		
 		<a href="/ch05/1_jdbc.jsp">메인</a><br>
-		<a href="/ch05/user1/list.jsp">목록</a><br>
+		<a href="/ch05/user3/list.jsp">목록</a><br>
 		
 	
-		<form action="/ch05/user1/proc/modify.jsp" method="post">
+		<form action="/ch05/user3/proc/modify.jsp" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>					
-					<td><input type="text" name="userid" value="<%= user1.getUserid() %>" readonly></td>
+					<td><input type="text" name="userid" value="<%= user3.getUserid() %>" readonly></td>
 				</tr>
 				<tr>
 					<td>이름</td>					
-					<td><input type="text" name="name" value="<%= user1.getName() %>"></td>
+					<td><input type="text" name="name" value="<%= user3.getName() %>"></td>
 				</tr>
 				<tr>
-					<td>휴대폰</td>					
-					<td><input type="text" name="hp" value="<%= user1.getHp() %>"></td>
+					<td>생년월일</td>					
+					<td><input type="text" name="birth" value="<%= user3.getBirth() %>"></td>
 				</tr>
 				<tr>
-					<td>나이</td>					
-					<td><input type="text" name="age" value="<%= user1.getAge() %>"></td>
+					<td>전화번호</td>					
+					<td><input type="text" name="hp" value="<%= user3.getHp() %>"></td>
+				</tr>
+				<tr>
+					<td>주소</td>					
+					<td><input type="text" name="addr" value="<%= user3.getAddr() %>"></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="right">
