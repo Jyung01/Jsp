@@ -1,3 +1,6 @@
+<%@page import="javax.sql.DataSource"%>
+<%@page import="javax.naming.InitialContext"%>
+<%@page import="javax.naming.Context"%>
 <%@page import="sub1.User2"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -11,20 +14,17 @@
 	// 수정 데이터
 	User2 user2 = null;
 
-	// --------------------------------
-	// 수정 데이터 조회 (데이터베이스 조회)
-	// --------------------------------
-	String host = "jdbc:mysql://localhost:3306/studydb";
-	String user = "wldnd9895";
-	String pass = "1234";
-	
+
+
 	
 	try {
-		// 1) 드라이버 로드
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		// 2) 데이터베이스 접속
-		Connection conn = DriverManager.getConnection(host, user, pass);
-		// 3) SQL 실행 객체 생성
+		// 1) JNDI 서비스 객체 생성
+		Context initCtx = new InitialContext();
+		Context ctx = (Context) initCtx.lookup("java:comp/env"); // JNDI 기본 환경 이름
+		
+		// 2) 커넥션풀 데이터베이스 커넥션 가져오기
+		DataSource ds = (DataSource) ctx.lookup("jdbc/studydb");
+				Connection conn = ds.getConnection();
 		String sql = "SELECT * FROM user2 where userid = ?";
 		PreparedStatement psmt = conn.prepareStatement(sql);
 		psmt.setString(1, userid);
