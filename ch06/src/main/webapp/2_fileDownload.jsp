@@ -52,7 +52,7 @@
 		<%--
 			날짜 : 2026/05/26
 			이름 : 양지웅
-			내용 : JSP 파일 업로드 실습
+			내용 : JSP 파일 다운로드 실습
 		 --%>
 	</head>
 	<body>
@@ -77,8 +77,8 @@
 				<td><%= file.getSfname() %></td>
 				<td><%= file.getRdate() %></td>
 				<td>
-					<a href="#">삭제</a>
-					<a href="#">다운</a>
+					<a href="./proc/fileDelete.jsp?no=<%= file.getNo() %>">삭제</a>
+					<a href="./proc/fileDownload.jsp?no=<%= file.getNo() %>">다운</a>
 				</td>
 			</tr>
 			<% } %>
