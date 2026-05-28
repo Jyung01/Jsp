@@ -47,7 +47,7 @@
 		Transport.send(message);
 		
 	} catch (Exception e) {
-		
+		e.printStackTrace();
 	}
 	
 	// 이메일 전송 후 작성 폼 이동
