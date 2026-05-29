@@ -11,33 +11,34 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import dto.User1DTO;
+import dto.User2DTO;
 import utill.DBHelper;
 import utill.SQL;
 
 // DAO(Data Access Object) : 데이터베이스와 상호작용하는 MVC 컴포넌트
-public class User1DAO extends DBHelper {
+public class User2DAO extends DBHelper {
 	
 	// 싱글톤
-	private static User1DAO instance = new User1DAO();
+	private static User2DAO instance = new User2DAO();
 	
-	public static User1DAO getInstance() {
+	public static User2DAO getInstance() {
 		return instance;
 	}
 	
-	private User1DAO() {}
+	private User2DAO() {}
 	
 	
 	// 기본 CRUD 메서드
-	public void insert(User1DTO dto) {
+	public void insert(User2DTO dto) {
 		try {
 			conn = getConnection();
 			
-			PreparedStatement psmt =  conn.prepareStatement(SQL.INSERT_USER1);
+			psmt =  conn.prepareStatement(SQL.INSERT_USER2);
 			
 			psmt.setString(1, dto.getUserid());
 			psmt.setString(2, dto.getName());
-			psmt.setString(3, dto.getHp());
-			psmt.setInt(4, dto.getAge());
+			psmt.setString(3, dto.getBirth());
+			psmt.setString(4, dto.getAddr());
 			psmt.executeUpdate();
 			
 			closeAll();				
@@ -47,25 +48,25 @@ public class User1DAO extends DBHelper {
 		}
 	}
 	
-	public User1DTO select(String userid) {
+	public User2DTO select(String userid) {
 		
-		User1DTO dto = null;
+		User2DTO dto = null;
 		
 		try {
 			conn = getConnection();
 			
-			psmt =  conn.prepareStatement(SQL.SELECT_USER1);
+			psmt =  conn.prepareStatement(SQL.SELECT_USER2);
 			
 			psmt.setString(1, userid);
 			
 			rs = psmt.executeQuery();
 			
 			if(rs.next()) {
-				dto = new User1DTO();
+				dto = new User2DTO();
 				dto.setUserid(rs.getString(1));
 				dto.setName(rs.getString(2));
-				dto.setHp(rs.getString(3));
-				dto.setAge(rs.getInt(4));
+				dto.setBirth(rs.getString(3));
+				dto.setAddr(rs.getString(4));
 			}
 			
 			
@@ -79,23 +80,23 @@ public class User1DAO extends DBHelper {
 		return dto;
 	}
 	
-	public List<User1DTO> selectAll() {
+	public List<User2DTO> selectAll() {
 		
 		// 반환용 리스트 선언
-		List<User1DTO> dtoList = new ArrayList<>();
+		List<User2DTO> dtoList = new ArrayList<>();
 		
 		try {
 			conn = getConnection();
 			stmt =  conn.createStatement();
 						
-			rs = stmt.executeQuery(SQL.SELECT_ALL_USER1);
+			rs = stmt.executeQuery(SQL.SELECT_ALL_USER2);
 			
 			while(rs.next()) {
-				User1DTO dto = new User1DTO();
+				User2DTO dto = new User2DTO();
 				dto.setUserid(rs.getString(1));
 				dto.setName(rs.getString(2));
-				dto.setHp(rs.getString(3));
-				dto.setAge(rs.getInt(4));
+				dto.setBirth(rs.getString(3));
+				dto.setAddr(rs.getString(4));
 				
 				dtoList.add(dto);
 			}
@@ -108,16 +109,16 @@ public class User1DAO extends DBHelper {
 		return dtoList;
 	}
 	
-	public void update(User1DTO dto) {
+	public void update(User2DTO dto) {
 		
 		try {
 			conn = getConnection();
 			
-			psmt =  conn.prepareStatement(SQL.UPDATE_USER1);
+			psmt =  conn.prepareStatement(SQL.UPDATE_USER2);
 			
 			psmt.setString(1, dto.getName());
-			psmt.setString(2, dto.getHp());
-			psmt.setInt(3, dto.getAge());
+			psmt.setString(2, dto.getBirth());
+			psmt.setString(3, dto.getAddr());
 			psmt.setString(4, dto.getUserid());
 			psmt.executeUpdate();
 			
@@ -134,7 +135,7 @@ public class User1DAO extends DBHelper {
 		try {
 			conn = getConnection();
 			
-			psmt =  conn.prepareStatement(SQL.DELETE_USER1);
+			psmt =  conn.prepareStatement(SQL.DELETE_USER2);
 			
 			psmt.setString(1, userid);
 			psmt.executeUpdate();

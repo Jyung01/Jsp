@@ -12,4 +12,52 @@ public class SQL {
 													+ "age = ? "
 													+ "where userid = ?";
 	public static final String DELETE_USER1 = "delete from user1 where userid=?";
+	
+	// user2
+	public static final String INSERT_USER2 = "insert into user2 values (?,?,?,?)";
+	public static final String SELECT_USER2 = "select * from user2 where userid=?";
+	public static final String SELECT_ALL_USER2 = "select * from user2";
+	public static final String UPDATE_USER2 = "update user2 set "
+													+ "name = ?,"
+													+ "birth = ?,"
+													+ "addr = ? "
+													+ "where userid = ?";
+	public static final String DELETE_USER2 = "delete from user2 where userid=?";
+	
+	// user3
+	public static final String INSERT_USER3 = "insert into user3 values (?,?,?,?,?)";
+	public static final String SELECT_USER3 = "select * from user3 where userid=?";
+	public static final String SELECT_ALL_USER3 = "select * from user3";
+	public static final String UPDATE_USER3 = "update user3 set "
+													+ "name = ?,"
+													+ "birth = ?,"
+													+ "hp = ?,"
+													+ "addr = ? "
+													+ "where userid = ?";
+	public static final String DELETE_USER3 = "delete from user3 where userid=?";
+	
+	// user4
+	public static final String INSERT_USER4 = "insert into user4 values (?,?,?,?,?,?)";
+	public static final String SELECT_USER4 = "select * from user4 where userid=?";
+	public static final String SELECT_ALL_USER4 = "select * from user4";
+	public static final String UPDATE_USER4 = "update user4 set "
+													+ "name = ?,"
+													+ "gender = ?,"
+													+ "age = ?,"
+													+ "hp = ?,"
+													+ "addr = ? "
+													+ "where userid = ?";
+	public static final String DELETE_USER4 = "delete from user4 where userid=?";
+	
+	// user4
+	public static final String INSERT_USER5 = "insert into user5 values (null,?,?,?,?)";
+	public static final String SELECT_USER5 = "select * from user5 where seq=?";
+	public static final String SELECT_ALL_USER5 = "select * from user5";
+	public static final String UPDATE_USER5 = "update user5 set "
+													+ "name = ?,"
+													+ "gender = ?,"
+													+ "age = ?,"
+													+ "addr = ? "
+													+ "where seq = ?";
+	public static final String DELETE_USER5 = "delete from user5 where seq=?";
 }
