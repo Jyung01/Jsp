@@ -10,5 +10,8 @@
 		<a href="/ch09/hello.do">hello</a>
 		<a href="/ch09/welcome.do">welcome</a>
 		<a href="/ch09/greeting.do">greeting</a>
+		
+		<h4>MVC 종합 실습</h4>
+		<a href="/ch09/user1/list.do">User1 목록</a>
 	</body>
 </html>
