@@ -14,8 +14,9 @@
                 <nav>
                     <h1>글쓰기</h1>
                 </nav>
-                <form action="#">
-                    <table border="0">                        
+                <form action="/jboard/article/write.do" method="post">
+                <input type="hidden" name="writer" value="${sessUser.userid}" />     
+                    <table border="0">                   
                         <tr>
                             <th>제목</th>
                             <td><input type="text" name="title" placeholder="제목을 입력하세요."/></td>
@@ -39,7 +40,7 @@
                     </table>
                     
                     <div>
-                        <a href="./list.html" class="btn btnCancel">취소</a>
+                        <a href="/jboard/article/list.do" class="btn btnCancel">취소</a>
                         <input type="submit" value="작성완료" class="btn btnComplete"/>
                     </div>
                 </form>

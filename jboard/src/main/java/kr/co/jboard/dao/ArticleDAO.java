@@ -96,8 +96,6 @@ public class ArticleDAO extends DBHelper {
 			
 			closeAll();
 			
-			
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
