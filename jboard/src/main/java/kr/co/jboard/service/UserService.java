@@ -24,7 +24,7 @@ public enum UserService {
 	}
 	
 	// 이메일 인증코드 전송
-	public void sendEmailCode(String receiver) {
+	public String sendEmailCode(String receiver) {
 		
 		// 인증코드 생성(6자리 랜덤 숫자)
 		int code = ThreadLocalRandom.current().nextInt(100_000, 1_000_000);
@@ -56,6 +56,7 @@ public enum UserService {
 			
 		});
 		
+		
 		// 이메일 전송
 		Message message = new MimeMessage(sess);
 		
@@ -71,6 +72,8 @@ public enum UserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return String.valueOf(code);
 	}
 	
 	public int getCount(String type, String value) {
@@ -81,6 +84,7 @@ public enum UserService {
 		return dao.select(userid);
 		
 	}
+	
 	public UserDTO findById(String userid, String pass) {
 		return dao.select(userid, pass);
 		
@@ -89,9 +93,11 @@ public enum UserService {
 	public List<UserDTO> findAll() {
 		return dao.selectAll();
 	}
+	
 	public void modify(UserDTO dto) {
 		dao.update(dto);
 	}
+	
 	public void remove(String userid) {
 		dao.delete(userid);
 	}

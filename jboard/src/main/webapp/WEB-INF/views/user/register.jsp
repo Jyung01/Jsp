@@ -72,9 +72,20 @@
 			const btnEmail = document.getElementById("btnEmail");
 			const btnConfirm = document.getElementById("btnConfirm");
 			const emailResult = document.getElementsByClassName("emailResult")[0];
+			const auth = document.getElementsByClassName("auth")[0];
+			
+			let preventDblClick = false; // 이중 클릭 방지
 			
 			btnEmail.addEventListener("click", async function(e) {
 				e.preventDefault();
+				
+				// 이중 클릭 방지
+				if (preventDblClick) {
+					return;
+				}
+				
+				preventDblClick = true;
+				console.log("이중 클릭 방지");
 				
 				const value = form.email.value;
 				
@@ -90,8 +101,42 @@
 				}else{
 					emailResult.innerText = '이메일 인증코드를 확인하세요';
 					emailResult.style.color = 'green';
+					auth.style.display = "block";	//인증코드 입력 필드 노출
+					
+					
 				}
 				
+			});
+			// -----------------------
+			// 인증 코드 확인 버튼 클릭
+			// -----------------------
+			
+			btnConfirm.addEventListener("click", async function(e) {
+				e.preventDefault();
+				
+				const value = form.code.value;
+				
+				// form-Data 생성
+				const formData = new FormData();
+				formData.append('code', value);
+				
+				// 이메일 인증코드 전송하기 (인증 코드 검증)
+				const response = await fetch("/jboard/user/check.do", {
+												method: 'POST',
+												body: formData,
+											});
+				const data = await response.json();
+				
+				console.log(data);
+				
+				if (data.count > 0){
+					emailResult.innerText = '인증 코드가 다릅니다.';
+					emailResult.style.color = 'red';
+				} else {
+					emailResult.innerText = '이메일이 인증되었습니다.';
+					emailResult.style.color = 'green';
+					
+				}
 			});
 			
 			
@@ -152,7 +197,7 @@
                                 <button type="button" id="btnEmail"><img src="../images/chk_auth.gif" alt="인증번호 받기"/></button>
                                 <span class="emailResult"></span>
                                 <div class="auth">
-                                    <input type="text" name="auth" placeholder="인증번호 입력"/>
+                                    <input type="text" name="code" placeholder="인증번호 입력"/>
                                     <button type="button" id="btnConfirm"><img src="../images/chk_confirm.gif" alt="확인"/></button>
                                 </div>
                             </td>

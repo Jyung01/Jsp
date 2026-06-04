@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.co.jboard.service.UserService;
 
 @WebServlet("/user/check.do")
@@ -33,7 +34,11 @@ public class CheckController extends HttpServlet {
 		
 		// 이메일 인증 코드 전송
 		if(type.equals("email") && count < 1) {
-			service.sendEmailCode(value);
+			String code = service.sendEmailCode(value);
+			
+			// 인증 코드 세션 저장
+			HttpSession session = req.getSession();
+			session.setAttribute("sessCode", code);
 		}
 		
 		// 결과용 JSON 생성
@@ -50,6 +55,26 @@ public class CheckController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		// 인증코드 수신
+		String code = req.getParameter("code");
+		
+		// 세션에 저장된 인증코드 가져오기
+		HttpSession session = req.getSession();
+		String sessCode = (String) session.getAttribute("sessCode");
+				
+		// 인증코드 일치여부 검사
+		JsonObject json = new JsonObject();
+		if (sessCode.equals(code)) {
+			json.addProperty("count", 0);	//0 : 인증완료, 1: 인증코드 불일치
+			
+		} else {
+			json.addProperty("count", 1);	//0 : 인증완료, 1: 인증코드 불일치
+			
+		}
+		// JSON 전송
+		resp.setContentType("application/json; charset=UTF-8");
+		resp.getWriter().print(json.toString());
 		
 	}
 		
