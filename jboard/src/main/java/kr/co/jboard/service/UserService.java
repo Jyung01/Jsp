@@ -1,5 +1,7 @@
 package kr.co.jboard.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
@@ -49,7 +51,19 @@ public enum UserService {
 			
 			protected PasswordAuthentication getPasswordAuthentication() {
 				
-				final String APP_PASS = "앱인증번호";
+				Properties config = new Properties();
+
+				try (InputStream is =
+				        getClass().getClassLoader()
+				                  .getResourceAsStream("config.properties")) {
+
+				    config.load(is);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				final String APP_PASS = config.getProperty("gmail.app.password");
 				
 				return new PasswordAuthentication(sender, APP_PASS);
 			}
