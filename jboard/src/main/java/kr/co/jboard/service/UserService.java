@@ -49,7 +49,7 @@ public enum UserService {
 			
 			protected PasswordAuthentication getPasswordAuthentication() {
 				
-				final String APP_PASS = "dppxpubtryzqtulu";
+				final String APP_PASS = "앱인증번호";
 				
 				return new PasswordAuthentication(sender, APP_PASS);
 			}
