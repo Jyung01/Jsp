@@ -1,2 +1,2 @@
 /.metadata/
-jboard/WebContent/WEB-INF/config.properties
+**/src/config.properties
