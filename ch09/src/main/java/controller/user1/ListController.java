@@ -3,6 +3,8 @@ package controller.user1;
 import java.io.IOException;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import dto.User1DTO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -23,18 +25,34 @@ public class ListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		String mode = req.getParameter("mode");
+		
 		// User1 데이터 요청
 		List<User1DTO> dtoList = service.findAll();
 		
-		// View 데이터 참조
-		//(Controller 에서 View 로 forward 하기 때문에 Controller 와 View 는 같은 Request Scope 를 가짐)  ⭐⭐    
-		req.setAttribute("dtoList", dtoList); // View(JSP)에서 dtoList를 참조
-		System.out.println(dtoList);
+		if (mode == null) {
+			// View 데이터 참조
+			//(Controller 에서 View 로 forward 하기 때문에 Controller 와 View 는 같은 Request Scope 를 가짐)  ⭐⭐    
+			req.setAttribute("dtoList", dtoList); // View(JSP)에서 dtoList를 참조
+			System.out.println(dtoList);
+			
+			
+			// View forward
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/user1/list.jsp");
+			dispatcher.forward(req, resp);
+			
+		} else if (mode.equals("json")) {
+			
+			// JSON 생성 (List를 Json으로 변환)
+			Gson gson = new Gson();
+			String strJson = gson.toJson(dtoList);
+			
+			// 사용자에게 JSON 응답
+			resp.setContentType("application/json;charset=UTF-8");
+			resp.getWriter().write(strJson);
+			
+		}
 		
-		
-		// View forward
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/user1/list.jsp");
-		dispatcher.forward(req, resp);
 	}
 	
 	@Override

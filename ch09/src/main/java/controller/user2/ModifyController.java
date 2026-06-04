@@ -2,6 +2,8 @@ package controller.user2;
 
 import java.io.IOException;
 
+import com.google.gson.Gson;
+
 import dto.User1DTO;
 import dto.User2DTO;
 import jakarta.servlet.RequestDispatcher;
@@ -26,16 +28,29 @@ public class ModifyController extends HttpServlet {
 		
 		// 전송 데이터 수신
 		String userid = req.getParameter("userid");
+		String mode = req.getParameter("mode");
 		
 		// 수정 데이터 조회
 		User2DTO dto = service.findbyId(userid);
 		
-		// View 데이터 참조
-		req.setAttribute("user2DTO", dto);
+		if (mode == null) {
+			// View 데이터 참조
+			req.setAttribute("user2DTO", dto);
+			
+			// View forward
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/user2/modify.jsp");
+			dispatcher.forward(req, resp);
+		} else if (mode.equals("json")) {
+			// JSON 생성 (List를 Json으로 변환)
+			Gson gson = new Gson();
+			String strJson = gson.toJson(dto);
+			
+			// 사용자에게 JSON 응답
+			resp.setContentType("application/json;charset=UTF-8");
+			resp.getWriter().write(strJson);
+		}
 		
-		// View forward
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/user2/modify.jsp");
-		dispatcher.forward(req, resp);
+		
 	}
 	
 	@Override
@@ -45,6 +60,7 @@ public class ModifyController extends HttpServlet {
 		String name = req.getParameter("name");
 		String birth = req.getParameter("birth");
 		String addr = req.getParameter("addr");
+		String mode = req.getParameter("mode");
 		
 		// 서비스 전송 객체 생성
 		User2DTO dto = new User2DTO();
@@ -57,7 +73,19 @@ public class ModifyController extends HttpServlet {
 		// 서비스 메서드 호출
 		service.modify(dto);
 		
-		resp.sendRedirect("/ch09/user2/list.do?modify=success");
+		if (mode == null) {
+			// 목록 리다이렉트
+			resp.sendRedirect("/ch09/user2/list.do?modify=success");
+		} else if (mode.equals("json")) {
+			// JSON 생성 (List를 Json으로 변환)
+			Gson gson = new Gson();
+			String strJson = gson.toJson(dto);
+			
+			// 사용자에게 JSON 응답
+			resp.setContentType("application/json;charset=UTF-8");
+			resp.getWriter().write(strJson);
+		}
+		
 		
 	}
 }
