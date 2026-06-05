@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>글쓰기</title>
-    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="/jboard/css/style.css"/>
 </head>
 <body>
     <div id="wrapper">
@@ -14,7 +14,7 @@
                 <nav>
                     <h1>글쓰기</h1>
                 </nav>
-                <form action="/jboard/article/write.do" method="post">
+                <form action="/jboard/article/write.do" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="writer" value="${sessUser.userid}" />     
                     <table border="0">                   
                         <tr>

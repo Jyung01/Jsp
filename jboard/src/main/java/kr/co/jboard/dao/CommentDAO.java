@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.jboard.dto.CommentDTO;
-import kr.co.jboard.utill.DBHelper;
-import kr.co.jboard.utill.SQL;
+import kr.co.jboard.util.DBHelper;
+import kr.co.jboard.util.SQL;
 
 public class CommentDAO extends DBHelper {
 	

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.jboard.dto.TermsDTO;
+import kr.co.jboard.util.DBHelper;
+import kr.co.jboard.util.SQL;
 import kr.co.jboard.dto.TermsDTO;
-import kr.co.jboard.utill.DBHelper;
-import kr.co.jboard.utill.SQL;
 
 public class TermsDAO extends DBHelper {
 	

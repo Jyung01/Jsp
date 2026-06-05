@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.jboard.dto.UserDTO;
+import kr.co.jboard.util.DBHelper;
+import kr.co.jboard.util.SQL;
 import kr.co.jboard.dto.UserDTO;
-import kr.co.jboard.utill.DBHelper;
-import kr.co.jboard.utill.SQL;
 
 public class UserDAO extends DBHelper {
 	
